@@ -25,7 +25,6 @@
   <h1>Оцените amakassi</h1>
   
   <form id="ratingForm">
-    <input type="hidden" name="name" value="amakassi" />
    
     <div>
       <label>Выберите оценку:</label><br>
@@ -73,7 +72,7 @@ document.getElementById('ratingForm').addEventListener('submit', function(event)
 
       if (!valid) return;
 
-      const scriptURL = 'https://script.google.com/macros/s/AKfycbzpPGNvJ615IIFLmH614hc3sJrz0FEzMoxLfGApUSU-G6ax91evjF-HvP-sYjvyDUSz/exec';
+      const scriptURL = 'https://script.google.com/macros/s/AKfycbyMv2BaiICe74WbyVMJCWOE9zs4JPYmC-A-QA24jwPm478N_HS8saxGM-QUKkjj5nQe/exec';
 
       fetch(scriptURL, {
         method: 'POST',
