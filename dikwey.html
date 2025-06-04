@@ -47,41 +47,42 @@
   </form>
   
   <script>
-    document.getElementById('ratingForm').addEventListener('submit', function(event) {
-      event.preventDefault();
-      
-      const rating = document.querySelector('input[name="rating"]:checked');
-      const comment = document.getElementById('comment').value.trim();
-      
-      let valid = true;
-      
-      // Проверка оценки
-      if (!rating) {
-        document.getElementById('ratingError').style.display = 'block';
-        valid = false;
-      } else {
-        document.getElementById('ratingError').style.display = 'none';
-      }
-      
-      // Проверка комментария
-      if (comment === '') {
-        document.getElementById('commentError').style.display = 'block';
-        valid = false;
-      } else {
-        document.getElementById('commentError').style.display = 'none';
-      }
-      
-      if (!valid) {
-        return;
-      }
-      
-      alert('Спасибо за вашу оценку!');
-      
-      // Здесь можно добавить отправку данных на сервер (если будет)
-      
-      // Перенаправляем на главную страницу с меню
-      window.location.href = 'index.html';
-    });
+  document.getElementById('ratingForm').addEventListener('submit', function(event) {
+  event.preventDefault();
+  
+  const rating = document.querySelector('input[name="rating"]:checked');
+  const comment = document.getElementById('comment').value.trim();
+  
+  let valid = true;
+  
+  if (!rating) {
+    document.getElementById('ratingError').style.display = 'block';
+    valid = false;
+  } else {
+    document.getElementById('ratingError').style.display = 'none';
+  }
+  
+  if (comment === '') {
+    document.getElementById('commentError').style.display = 'block';
+    valid = false;
+  } else {
+    document.getElementById('commentError').style.display = 'none';
+  }
+  
+  if (!valid) return;
+  
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbwJfYGKfwz-A5kH1ZSNd9K-8D1rGJ7w7ZKDni8XGVZ9WSMcx1TOikMZGi5r6mf_CHNO/exec';
+
+  fetch(scriptURL, {
+    method: 'POST',
+    body: new FormData(this)
+  })
+  .then(response => {
+    alert('Спасибо за вашу оценку!');
+    window.location.href = 'index.html';
+  })
+  .catch(error => alert('Ошибка при отправке. Попробуйте еще раз.'));
+});
   </script>
   
 </body>
