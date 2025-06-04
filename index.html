@@ -40,10 +40,24 @@
       text-decoration: none;
       color: #1a73e8;
       font-weight: bold;
+      transition: color 0.2s;
     }
 
     a:hover {
       text-decoration: underline;
+    }
+
+    a.disabled {
+      color: gray;
+      pointer-events: none;
+      cursor: default;
+    }
+
+    a.disabled:hover::after {
+      content: " — Вы уже оставили отзыв на этой неделе";
+      font-weight: normal;
+      color: #888;
+      font-size: 0.9em;
     }
   </style>
 </head>
@@ -53,28 +67,49 @@
   <div class="section">
     <h2>Владелец</h2>
     <ul>
-      <li><a href="leir4iks.html">leir4iks</a></li>
+      <li><a href="leir4iks.html" data-nick="leir4iks">leir4iks</a></li>
     </ul>
   </div>
 
   <div class="section">
     <h2>Админы</h2>
     <ul>
-      <li><a href="headless_reaper.html">Headless_reaper</a></li>
-      <li><a href="wywronw.html">wywronw</a></li>
+      <li><a href="headless_reaper.html" data-nick="headless_reaper">Headless_reaper</a></li>
+      <li><a href="wywronw.html" data-nick="wywronw">wywronw</a></li>
     </ul>
   </div>
 
   <div class="section">
     <h2>Заявка мэны</h2>
     <ul>
-      <li><a href="dikwey.html">DIKWEY</a></li>
-      <li><a href="skerp.html">_skerp</a></li>
-      <li><a href="amakassi.html">amakassi</a></li>
-      <li><a href="djavelin.html">DJAVELIN_</a></li>
-      <li><a href="mark0bus11.html">Mark0bus11</a></li>
-      <li><a href="mimikrothschilsd.html">MimikRothschilSD</a></li>
+      <li><a href="dikwey.html" data-nick="dikwey">DIKWEY</a></li>
+      <li><a href="skerp.html" data-nick="skerp">_skerp</a></li>
+      <li><a href="amakassi.html" data-nick="amakassi">amakassi</a></li>
+      <li><a href="djavelin.html" data-nick="djavelin">DJAVELIN_</a></li>
+      <li><a href="mark0bus11.html" data-nick="mark0bus11">Mark0bus11</a></li>
+      <li><a href="mimikrothschilsd.html" data-nick="mimikrothschilsd">MimikRothschilSD</a></li>
     </ul>
   </div>
+
+  <script>
+    const links = document.querySelectorAll('a[data-nick]');
+    const now = new Date();
+
+    links.forEach(link => {
+      const nick = link.dataset.nick;
+      const lastVote = localStorage.getItem(`vote_${nick}`);
+
+      if (lastVote) {
+        const lastDate = new Date(parseInt(lastVote));
+
+        const oneWeekAgo = new Date();
+        oneWeekAgo.setDate(now.getDate() - 7);
+
+        if (lastDate > oneWeekAgo) {
+          link.classList.add('disabled');
+        }
+      }
+    });
+  </script>
 </body>
 </html>
