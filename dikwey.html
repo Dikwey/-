@@ -5,93 +5,84 @@
   <title>Оценка DIKWEY</title>
   <style>
     body {
-      font-family: sans-serif;
-      background-color: #f4f4f4;
-      padding: 20px;
+      font-family: Arial, sans-serif;
+      margin: 30px;
     }
-
-    .card {
-      background-color: white;
-      border-radius: 10px;
-      padding: 20px;
-      max-width: 500px;
-      margin: auto;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-
-    h1 {
-      text-align: center;
-      color: #333;
-    }
-
     label {
-      display: block;
-      margin: 10px 0;
+      font-weight: bold;
     }
-
     textarea {
-      width: 100%;
-      padding: 10px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
       resize: vertical;
     }
-
-    button {
-      margin-top: 15px;
-      padding: 10px 20px;
-      border: none;
-      background-color: #1a73e8;
-      color: white;
-      font-size: 16px;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background-color: #0f5dc0;
+    .error {
+      color: red;
+      margin-top: 5px;
+      display: none;
     }
   </style>
-
-  <script>
-    function handleSubmit(event) {
-      event.preventDefault();
-
-      const rating = document.querySelector('input[name="rating"]:checked');
-      const comment = document.getElementById('comment').value;
-
-      if (!rating) {
-        alert("Пожалуйста, поставь оценку.");
-        return;
-      }
-
-      if (comment.trim() === '') {
-        alert("Пожалуйста, напиши комментарий.");
-        return;
-      }
-
-      alert("Спасибо за отзыв!");
-      window.location.href = "index.html";
-    }
-  </script>
 </head>
 <body>
-  <div class="card">
-    <h1>Оценка DIKWEY</h1>
-
-    <form onsubmit="handleSubmit(event)">
-      <label>Оцени работу:</label>
-      <label><input type="radio" name="rating" value="1"> 1</label>
-      <label><input type="radio" name="rating" value="2"> 2</label>
-      <label><input type="radio" name="rating" value="3"> 3</label>
-      <label><input type="radio" name="rating" value="4"> 4</label>
-      <label><input type="radio" name="rating" value="5"> 5</label>
-
-      <label for="comment">Комментарий:</label>
-      <textarea id="comment" rows="5" placeholder="Напиши отзыв..." required></textarea>
-
-      <button type="submit">Отправить</button>
-    </form>
-  </div>
+  <h1>Оцените DIKWEY</h1>
+  
+  <form id="ratingForm">
+    <div>
+      <label>Выберите оценку:</label><br>
+      <input type="radio" name="rating" value="5" id="star5" /> <label for="star5">5</label><br>
+      <input type="radio" name="rating" value="4" id="star4" /> <label for="star4">4</label><br>
+      <input type="radio" name="rating" value="3" id="star3" /> <label for="star3">3</label><br>
+      <input type="radio" name="rating" value="2" id="star2" /> <label for="star2">2</label><br>
+      <input type="radio" name="rating" value="1" id="star1" /> <label for="star1">1</label><br>
+      <div id="ratingError" class="error">Пожалуйста, выберите оценку.</div>
+    </div>
+    
+    <div style="margin-top: 20px;">
+      <label for="comment">Комментарий:</label><br>
+      <textarea id="comment" name="comment" rows="5" cols="50" required></textarea>
+      <div id="commentError" class="error">Пожалуйста, напишите комментарий.</div>
+    </div>
+    
+    <div style="margin-top: 20px;">
+      <button type="submit">Отправить оценку</button>
+    </div>
+  </form>
+  
+  <script>
+    document.getElementById('ratingForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      
+      const rating = document.querySelector('input[name="rating"]:checked');
+      const comment = document.getElementById('comment').value.trim();
+      
+      let valid = true;
+      
+      // Проверка оценки
+      if (!rating) {
+        document.getElementById('ratingError').style.display = 'block';
+        valid = false;
+      } else {
+        document.getElementById('ratingError').style.display = 'none';
+      }
+      
+      // Проверка комментария
+      if (comment === '') {
+        document.getElementById('commentError').style.display = 'block';
+        valid = false;
+      } else {
+        document.getElementById('commentError').style.display = 'none';
+      }
+      
+      if (!valid) {
+        return;
+      }
+      
+      alert('Спасибо за вашу оценку!');
+      
+      // Здесь можно добавить отправку данных на сервер (если будет)
+      
+      // Перенаправляем на главную страницу с меню
+      window.location.href = 'index.html';
+    });
+  </script>
+  
 </body>
 </html>
