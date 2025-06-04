@@ -47,40 +47,41 @@
   </form>
   
   <script>
-    document.getElementById('ratingForm').addEventListener('submit', function(event) {
+document.getElementById('ratingForm').addEventListener('submit', function(event) {
       event.preventDefault();
-      
+
       const rating = document.querySelector('input[name="rating"]:checked');
       const comment = document.getElementById('comment').value.trim();
-      
+
       let valid = true;
-      
-      // Проверка оценки
+
       if (!rating) {
         document.getElementById('ratingError').style.display = 'block';
         valid = false;
       } else {
         document.getElementById('ratingError').style.display = 'none';
       }
-      
-      // Проверка комментария
+
       if (comment === '') {
         document.getElementById('commentError').style.display = 'block';
         valid = false;
       } else {
         document.getElementById('commentError').style.display = 'none';
       }
-      
-      if (!valid) {
-        return;
-      }
-      
-      alert('Спасибо за вашу оценку!');
-      
-      // Здесь можно добавить отправку данных на сервер (если будет)
-      
-      // Перенаправляем на главную страницу с меню
-      window.location.href = 'index.html';
+
+      if (!valid) return;
+
+      const scriptURL = 'https://script.google.com/macros/s/AKfycbyh5n_yR7zA2JMMFo2fN5zipQYds6_y9BbKyrJoDaRUJgcU3Df94z9anOEfZYMEKo2i/exec';
+
+      fetch(scriptURL, {
+        method: 'POST',
+        body: new FormData(this)
+      })
+      .then(response => {
+        alert('Спасибо за вашу оценку!');
+        window.location.href = 'index.html'; // Перенаправление после отправки
+      })
+      .catch(error => alert('Ошибка при отправке. Попробуйте еще раз.'));
     });
   </script>
   
