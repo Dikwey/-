@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <title>Оценка headless_reaper</title>
+  <title>Оценка Mark0bus11</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -22,9 +22,11 @@
   </style>
 </head>
 <body>
-  <h1>Оцените headless_reaper</h1>
+  <h1>Оцените Mark0bus11</h1>
   
   <form id="ratingForm">
+    <input type="hidden" name="name" value="Mark0bus11" />
+   
     <div>
       <label>Выберите оценку:</label><br>
       <input type="radio" name="rating" value="5" id="star5" /> <label for="star5">5</label><br>
@@ -47,40 +49,41 @@
   </form>
   
   <script>
-    document.getElementById('ratingForm').addEventListener('submit', function(event) {
+document.getElementById('ratingForm').addEventListener('submit', function(event) {
       event.preventDefault();
-      
+
       const rating = document.querySelector('input[name="rating"]:checked');
       const comment = document.getElementById('comment').value.trim();
-      
+
       let valid = true;
-      
-      // Проверка оценки
+
       if (!rating) {
         document.getElementById('ratingError').style.display = 'block';
         valid = false;
       } else {
         document.getElementById('ratingError').style.display = 'none';
       }
-      
-      // Проверка комментария
+
       if (comment === '') {
         document.getElementById('commentError').style.display = 'block';
         valid = false;
       } else {
         document.getElementById('commentError').style.display = 'none';
       }
-      
-      if (!valid) {
-        return;
-      }
-      
-      alert('Спасибо за вашу оценку!');
-      
-      // Здесь можно добавить отправку данных на сервер (если будет)
-      
-      // Перенаправляем на главную страницу с меню
-      window.location.href = 'index.html';
+
+      if (!valid) return;
+
+      const scriptURL = 'https://script.google.com/macros/s/AKfycbyMv2BaiICe74WbyVMJCWOE9zs4JPYmC-A-QA24jwPm478N_HS8saxGM-QUKkjj5nQe/exec';
+
+      fetch(scriptURL, {
+        method: 'POST',
+        body: new FormData(this)
+      })
+      .then(response => {
+        alert('Спасибо за вашу оценку!');
+        window.location.href = 'index.html'; // Перенаправление после отправки
+      })
+      .catch(error => alert('Ошибка при отправке. Попробуйте еще раз.'));
     });
   </script>
   
